@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect} from 'react';
+import BoxePokemon from './components/BoxePokemon.jsx'
+import axios from 'axios';
+ 
+
+
+
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+     
+
+
+ const[pokemon,setPokemon]=useState([])
+  
+
+ const getPokemon=async ()=>{
+ let pokemonList=[]
+ for (let i = 1; i <=151; i++){
+ await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`).then(pokemon=>pokemonList.push(pokemon.data))
+ }
+console.log(pokemonList)
+setPokemon(pokemonList)
+
+}
+
+useEffect(()=>{
+getPokemon()
+
+},[])
+
+
+
+  return(
+   <BoxePokemon pokemon={pokemon}/>
+    );
 }
 
 export default App;
